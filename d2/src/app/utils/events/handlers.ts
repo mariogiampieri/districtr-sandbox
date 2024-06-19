@@ -17,7 +17,7 @@ export const HighlightFeature = (
       { hover: true }
     );
   });
-  const geoids = new Set(
+  const geoids: Set<string> = new Set(
     features?.map((feature) => feature.properties?.GEOID20)
   );
   // zoneStoreRef.setZoneAssignments(zoneStoreRef.selectedZone, geoids);
