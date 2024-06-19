@@ -1,26 +1,12 @@
 import { BLOCK_LAYER_ID, BLOCK_LAYER_SOURCE_ID } from "@/app/constants/layers";
 import { MutableRefObject, useEffect } from "react";
 import type { Map, MapGeoJSONFeature } from "maplibre-gl";
-
-export const highlightFeature = (
-  features: Array[MapGeoJSONFeature] | undefined,
-  map: MutableRefObject<Map | null>
-  //   highlightedFeature: MutableRefObject<number | null>
-  //   filterStoreRef: MutableRefObject<FilterStore | null>
+import { ZoneStore } from "@/app/store/zoneStore";
+export const HighlightFeature = (
+  features: Array<MapGeoJSONFeature> | undefined,
+  map: MutableRefObject<Map | null>,
+  zoneStoreRef: MutableRefObject<ZoneStore | null>
 ) => {
-  //   if (!feature) {
-  //     unhighlightFeature(map, highlightedFeature);
-  //     highlightedFeature.current = null;
-  //     return;
-  //   }
-  //   const newFeatureId = feature.id;
-  //   if (highlightedFeature.current === newFeatureId) {
-  //     return;
-  //   }
-  //   unhighlightFeature(map, highlightedFeature);
-
-  //   highlightedFeature.current = (newFeatureId as number) ?? null;
-  //   filterStoreRef.current?.setSelectedEdge(feature);
   features?.forEach((feature) => {
     map.current?.setFeatureState(
       {
@@ -30,9 +16,17 @@ export const highlightFeature = (
       },
       { hover: true }
     );
-    // console.log(feature);
   });
-  //   console.log(map.current?.getStyle());
+  const geoids = new Set(
+    features?.map((feature) => feature.properties?.GEOID20)
+  );
+  // zoneStoreRef.setZoneAssignments(zoneStoreRef.selectedZone, geoids);
+  if (features?.length) {
+    zoneStoreRef.current?.setZoneAssignments(
+      zoneStoreRef.current?.selectedZone,
+      geoids
+    );
+  }
 };
 
 const unhighlightFeature = (

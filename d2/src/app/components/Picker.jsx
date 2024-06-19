@@ -2,9 +2,11 @@ import React from "react";
 import * as Select from "@radix-ui/react-select";
 import { styled } from "@stitches/react";
 import { violet, mauve, blackA } from "@radix-ui/colors";
+// use zustand to track state
+import { useZoneStore } from "../store/zoneStore";
 
 const ZoneTypeSelector = () => {
-  const [value, setValue] = React.useState(1);
+  const { selectedZone, setSelectedZone } = useZoneStore();
   const options = [
     { value: "1", label: "First Zone" },
     { value: "2", label: "Second Zone" },
@@ -19,7 +21,7 @@ const ZoneTypeSelector = () => {
         <SelectContent>
           <SelectViewport>
             <Select.Group>
-              <SelectLabel>Zones</SelectLabel>
+              <SelectLabel>{selectedZone}</SelectLabel>
               {options.map((option) => (
                 <SelectItem key={option.value} value={option.value}>
                   {option.label}

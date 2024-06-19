@@ -59,7 +59,7 @@ export const BLOCKS_HOVER_LAYER: LayerSpecification = {
       0.2,
     ],
 
-    "fill-color": "#ff00ff",
+    "fill-color": "#cecece",
   },
 };
 
