@@ -5,6 +5,7 @@ import type { Map } from "maplibre-gl";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { MAP_CENTER, MAP_TILES } from "../constants/configuration";
+import { addLayer } from "../constants/layers";
 
 export const MapComponent: React.FC = () => {
   const map: MutableRefObject<Map | null> = useRef(null);
@@ -23,6 +24,8 @@ export const MapComponent: React.FC = () => {
     map.current.dragRotate.disable();
     map.current.on("load", () => {
       setMapLoaded(true);
+      addLayer(map);
+      console.log(map.current?.getStyle());
     });
   }, []);
 
