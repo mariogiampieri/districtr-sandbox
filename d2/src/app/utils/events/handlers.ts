@@ -20,7 +20,6 @@ export const HighlightFeature = (
   const geoids: Set<string> = new Set(
     features?.map((feature) => feature.properties?.GEOID20)
   );
-  // zoneStoreRef.setZoneAssignments(zoneStoreRef.selectedZone, geoids);
   if (features?.length) {
     zoneStoreRef.current?.setZoneAssignments(
       zoneStoreRef.current?.selectedZone,
