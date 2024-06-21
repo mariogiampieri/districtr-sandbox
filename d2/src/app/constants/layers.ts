@@ -13,20 +13,15 @@ export const DEFAULT_PAINT_STYLE: ExpressionSpecification = [
 ];
 
 export const ZONE_ASSIGNMENT_STYLE: ExpressionSpecification = [
-  // reference the zone store; if the feature is in the zone array, color it based on the color corresponding with zone id
-  "match",
-  ["get", "zone"],
-  1,
-  "#FF0000",
-  2,
-  "#00FF00",
-  3,
-  "#0000FF",
-  4,
-  "#FFFF00",
-  5,
-  "#FF00FF",
-  "#FF00FF",
+  // based on zone feature state, set fill color
+  "case",
+  ["==", ["feature-state", "zone"], 1],
+  "#ff0000",
+  ["==", ["feature-state", "zone"], 2],
+  "#00ff00",
+  ["==", ["feature-state", "zone"], 3],
+  "#0000ff",
+  "#cecece",
 ];
 
 export const BLOCKS_LAYER: LayerSpecification = {
@@ -59,7 +54,7 @@ export const BLOCKS_HOVER_LAYER: LayerSpecification = {
       0.2,
     ],
 
-    "fill-color": "#cecece",
+    "fill-color": ZONE_ASSIGNMENT_STYLE, //"#ff00ff",
   },
 };
 

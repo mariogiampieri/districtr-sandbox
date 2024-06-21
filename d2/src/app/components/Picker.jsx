@@ -7,13 +7,18 @@ import { useZoneStore } from "../store/zoneStore";
 
 const ZoneTypeSelector = () => {
   const { selectedZone, setSelectedZone } = useZoneStore();
+
+  const handlePickerValueChange = (value) => {
+    setSelectedZone(value);
+  };
+
   const options = [
     { value: "1", label: "First Zone" },
     { value: "2", label: "Second Zone" },
     { value: "3", label: "Third Zone" },
   ];
   return (
-    <Select.Root>
+    <Select.Root value={selectedZone} onValueChange={handlePickerValueChange}>
       <SelectTrigger aria-label="zones">
         <Select.Value placeholder="Select a Zone to paint with " />
       </SelectTrigger>

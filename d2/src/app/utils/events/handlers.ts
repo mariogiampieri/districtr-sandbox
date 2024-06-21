@@ -14,7 +14,7 @@ export const HighlightFeature = (
         id: feature?.id ?? undefined,
         sourceLayer: BLOCK_LAYER_SOURCE_ID,
       },
-      { hover: true }
+      { hover: true, zone: Number(zoneStoreRef.selectedZone) }
     );
   });
   const geoids: Set<string> = new Set(
