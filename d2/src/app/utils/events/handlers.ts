@@ -14,13 +14,12 @@ export const HighlightFeature = (
         id: feature?.id ?? undefined,
         sourceLayer: BLOCK_LAYER_SOURCE_ID,
       },
-      { hover: true }
+      { hover: true, zone: Number(zoneStoreRef.selectedZone) }
     );
   });
   const geoids: Set<string> = new Set(
     features?.map((feature) => feature.properties?.GEOID20)
   );
-  // zoneStoreRef.setZoneAssignments(zoneStoreRef.selectedZone, geoids);
   if (features?.length) {
     zoneStoreRef.current?.setZoneAssignments(
       zoneStoreRef.current?.selectedZone,
