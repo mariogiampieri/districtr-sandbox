@@ -16,11 +16,11 @@ export const ZONE_ASSIGNMENT_STYLE: ExpressionSpecification = [
   // based on zone feature state, set fill color
   "case",
   ["==", ["feature-state", "zone"], 1],
-  "#ff0000",
+  "#0099cd",
   ["==", ["feature-state", "zone"], 2],
-  "#00ff00",
+  "#ffca5d",
   ["==", ["feature-state", "zone"], 3],
-  "#0000ff",
+  "#00cd99",
   "#cecece",
 ];
 

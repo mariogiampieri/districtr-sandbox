@@ -4,4 +4,4 @@ export type Zone = number;
 export type GEOID = string;
 
 // create a dict of zone: [geoid]
-export type ZoneDict = Record<Zone, GEOID[]>;
+export type ZoneDict = Map<GEOID, Zone>;

@@ -7,7 +7,7 @@ import { PointLike } from "maplibre-gl";
 
 export const useApplyActions = (
   map: MutableRefObject<Map | null>,
-  mapLoaded: boolean
+  mapLoaded: boolean,
 ) => {
   const zoneStore = useZoneStore();
 
@@ -26,8 +26,6 @@ export const useApplyActions = (
         layers: [BLOCK_LAYER_ID],
       });
       HighlightFeature(selectedFeatures, map, zoneStore);
-    }
+    },
   );
-  //   console.log(zoneStore);
-  //   }, [mapLoaded]);
 };
