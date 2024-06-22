@@ -3,7 +3,7 @@
 // Adapted from
 // https://github.com/pgzmnk/nextjs-typescript/blob/main/next.config.js
 const nextConfig = {
-  transpilePackages: ["@duckdb/react-duckdb", "xterm"],
+  transpilePackages: ["@duckdb/duckdb-wasm", "apache-arrow", "xterm"],
   reactStrictMode: false,
   typescript: {
     ignoreBuildErrors: true,

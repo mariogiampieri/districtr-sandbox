@@ -4,10 +4,12 @@ import { BLOCK_LAYER_ID } from "@/app/constants/layers";
 import { HighlightFeature } from "./handlers";
 import { useZoneStore } from "@/app/store/zoneStore";
 import { PointLike } from "maplibre-gl";
+import * as duckdb from "@duckdb/duckdb-wasm";
 
 export const useApplyActions = (
   map: MutableRefObject<Map | null>,
   mapLoaded: boolean,
+  db: MutableRefObject<duckdb.AsyncDuckDB | null>,
 ) => {
   const zoneStore = useZoneStore();
 
@@ -25,7 +27,7 @@ export const useApplyActions = (
       const selectedFeatures = map.current?.queryRenderedFeatures(bbox, {
         layers: [BLOCK_LAYER_ID],
       });
-      HighlightFeature(selectedFeatures, map, zoneStore);
+      HighlightFeature(selectedFeatures, map, zoneStore, db);
     },
   );
 };
