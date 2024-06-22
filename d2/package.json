@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@duckdb/duckdb-wasm": "^1.28.1-dev106.0",
     "@radix-ui/colors": "^3.0.0",
     "@radix-ui/react-select": "^2.1.0",
     "@radix-ui/themes": "^3.0.5",
