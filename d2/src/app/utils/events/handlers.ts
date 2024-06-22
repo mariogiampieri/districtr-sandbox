@@ -30,7 +30,7 @@ export const HighlightFeature = (
       geoids,
       // db.current,
     );
-    insertZoneAssignments(zoneStore.selectedZone, geoids, db.current);
+    // insertZoneAssignments(zoneStore.selectedZone, geoids, db.current);
   }
 };
 
