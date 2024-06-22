@@ -1,9 +1,11 @@
-import { MutableRefObject, useEffect } from "react";
+import { MutableRefObject, useEffect, useState, useRef } from "react";
 import type { Map, MapLayerMouseEvent, MapLayerTouchEvent } from "maplibre-gl";
 import { BLOCK_LAYER_ID } from "@/app/constants/layers";
 import { HighlightFeature } from "./handlers";
 import { useZoneStore } from "@/app/store/zoneStore";
 import { PointLike } from "maplibre-gl";
+import { MapGeoJSONFeature } from "maplibre-gl";
+import { debounce } from "lodash";
 
 export const useApplyActions = (
   map: MutableRefObject<Map | null>,
@@ -11,8 +13,10 @@ export const useApplyActions = (
 ) => {
   const zoneStore = useZoneStore();
 
-  //   useEffect(() => {
-  //   if (!mapLoaded) return;
+  // TODO: ensure this is set and reset properly- for the demo
+  // i'm not sure that it's being set or reset properly
+  const accumulatedGeoids = useRef(new Set<string>());
+
   map.current?.on(
     "mousemove",
     "blocks-hover",
@@ -21,13 +25,11 @@ export const useApplyActions = (
         [e.point.x - 50, e.point.y - 50],
         [e.point.x + 50, e.point.y + 50],
       ];
-      // Find features intersecting the bounding box.
+
       const selectedFeatures = map.current?.queryRenderedFeatures(bbox, {
         layers: [BLOCK_LAYER_ID],
       });
-      HighlightFeature(selectedFeatures, map, zoneStore);
+      HighlightFeature(selectedFeatures, map, zoneStore, accumulatedGeoids);
     }
   );
-  //   console.log(zoneStore);
-  //   }, [mapLoaded]);
 };

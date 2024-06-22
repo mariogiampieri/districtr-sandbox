@@ -23,7 +23,6 @@ export const MapComponent: React.FC = () => {
       zoom: 6.75, // starting zoom
       maxZoom: 18,
     });
-    map.current.dragRotate.disable();
     map.current.on("load", () => {
       setMapLoaded(true);
       addLayer(map);

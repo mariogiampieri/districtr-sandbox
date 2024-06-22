@@ -2,10 +2,23 @@ import { BLOCK_LAYER_ID, BLOCK_LAYER_SOURCE_ID } from "@/app/constants/layers";
 import { MutableRefObject, useEffect } from "react";
 import type { Map, MapGeoJSONFeature } from "maplibre-gl";
 import { ZoneStore } from "@/app/store/zoneStore";
+import { debounce } from "lodash";
+const debouncedSetZoneAssignments = debounce(
+  (
+    zoneStoreRef: { setZoneAssignments: (arg0: any, arg1: any) => void },
+    selectedZone: any,
+    geoids: any
+  ) => {
+    zoneStoreRef.setZoneAssignments(selectedZone, geoids);
+  },
+  1000 // 1 second
+);
+
 export const HighlightFeature = (
   features: Array<MapGeoJSONFeature> | undefined,
   map: MutableRefObject<Map | null>,
-  zoneStoreRef: MutableRefObject<ZoneStore | null>
+  zoneStoreRef: MutableRefObject<ZoneStore | null>,
+  accumulatedGeoids: MutableRefObject<Set<string>>
 ) => {
   features?.forEach((feature) => {
     map.current?.setFeatureState(
@@ -17,13 +30,16 @@ export const HighlightFeature = (
       { hover: true, zone: Number(zoneStoreRef.selectedZone) }
     );
   });
-  const geoids: Set<string> = new Set(
-    features?.map((feature) => feature.properties?.GEOID20)
-  );
+
   if (features?.length) {
-    zoneStoreRef.current?.setZoneAssignments(
-      zoneStoreRef.current?.selectedZone,
-      geoids
+    features.forEach((feature) => {
+      accumulatedGeoids.current.add(feature.properties?.GEOID20);
+    });
+
+    debouncedSetZoneAssignments(
+      zoneStoreRef,
+      zoneStoreRef.selectedZone,
+      accumulatedGeoids.current
     );
   }
 };
