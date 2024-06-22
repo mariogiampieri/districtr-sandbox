@@ -5,7 +5,7 @@ import { ZoneStore } from "@/app/store/zoneStore";
 export const HighlightFeature = (
   features: Array<MapGeoJSONFeature> | undefined,
   map: MutableRefObject<Map | null>,
-  zoneStoreRef: MutableRefObject<ZoneStore | null>
+  zoneStore: ZoneStore,
 ) => {
   features?.forEach((feature) => {
     map.current?.setFeatureState(
@@ -14,23 +14,18 @@ export const HighlightFeature = (
         id: feature?.id ?? undefined,
         sourceLayer: BLOCK_LAYER_SOURCE_ID,
       },
-      { hover: true, zone: Number(zoneStoreRef.selectedZone) }
+      { hover: true, zone: Number(zoneStore.selectedZone) },
     );
   });
-  const geoids: Set<string> = new Set(
-    features?.map((feature) => feature.properties?.GEOID20)
-  );
+  const geoids = features?.map((feature) => feature.properties?.GEOID20) ?? [];
   if (features?.length) {
-    zoneStoreRef.current?.setZoneAssignments(
-      zoneStoreRef.current?.selectedZone,
-      geoids
-    );
+    zoneStore.setZoneAssignments(zoneStore.selectedZone, geoids);
   }
 };
 
 const unhighlightFeature = (
   map: MutableRefObject<Map | null>,
-  highlightedFeature: MutableRefObject<number | null>
+  highlightedFeature: MutableRefObject<number | null>,
   //   filterStoreRef: MutableRefObject<FilterStore | null>
 ) => {
   if (highlightedFeature.current) {
@@ -40,7 +35,7 @@ const unhighlightFeature = (
         id: highlightedFeature.current ?? undefined,
         sourceLayer: BLOCK_LAYER_SOURCE_ID,
       },
-      { hover: false }
+      { hover: false },
     );
     // filterStoreRef.current?.setSelectedEdge(undefined);
   }
