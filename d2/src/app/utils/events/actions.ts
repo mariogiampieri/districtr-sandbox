@@ -1,20 +1,18 @@
-import { MutableRefObject, useEffect } from "react";
+import { MutableRefObject, useEffect, useState } from "react";
 import type { Map, MapLayerMouseEvent, MapLayerTouchEvent } from "maplibre-gl";
 import { BLOCK_LAYER_ID } from "@/app/constants/layers";
 import { HighlightFeature } from "./handlers";
 import { useZoneStore } from "@/app/store/zoneStore";
 import { PointLike } from "maplibre-gl";
-
+import { MapGeoJSONFeature } from "maplibre-gl";
 export const useApplyActions = (
   map: MutableRefObject<Map | null>,
-  mapLoaded: boolean,
+  mapLoaded: boolean
 ) => {
   const zoneStore = useZoneStore();
 
-  //   useEffect(() => {
-  //   if (!mapLoaded) return;
   map.current?.on(
-    "mousemove",
+    "mouseover",
     "blocks-hover",
     (e: MapLayerMouseEvent | MapLayerTouchEvent) => {
       const bbox: [PointLike, PointLike] = [
@@ -26,6 +24,6 @@ export const useApplyActions = (
         layers: [BLOCK_LAYER_ID],
       });
       HighlightFeature(selectedFeatures, map, zoneStore);
-    },
+    }
   );
 };
