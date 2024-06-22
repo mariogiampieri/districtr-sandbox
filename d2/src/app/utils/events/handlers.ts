@@ -4,7 +4,11 @@ import type { Map, MapGeoJSONFeature } from "maplibre-gl";
 import { ZoneStore } from "@/app/store/zoneStore";
 import { debounce } from "lodash";
 const debouncedSetZoneAssignments = debounce(
-  (zoneStoreRef, selectedZone, geoids) => {
+  (
+    zoneStoreRef: { setZoneAssignments: (arg0: any, arg1: any) => void },
+    selectedZone: any,
+    geoids: any
+  ) => {
     zoneStoreRef.setZoneAssignments(selectedZone, geoids);
   },
   1000 // 1 second
