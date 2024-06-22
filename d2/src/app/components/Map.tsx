@@ -8,8 +8,10 @@ import { MAP_CENTER, MAP_TILES } from "../constants/configuration";
 import { BLOCK_LAYER_ID, addLayer } from "../constants/layers";
 import { HighlightFeature } from "../utils/events/handlers";
 import { useApplyActions } from "../utils/events/actions";
-
+import { useZoneStore } from "../store/zoneStore";
 export const MapComponent: React.FC = () => {
+  const { selectedZone, setSelectedZone } = useZoneStore();
+  const { zoneAssignments } = useZoneStore();
   const map: MutableRefObject<Map | null> = useRef(null);
   const mapContainer: MutableRefObject<HTMLDivElement | null> = useRef(null);
   const [mapLoaded, setMapLoaded] = useState(false);

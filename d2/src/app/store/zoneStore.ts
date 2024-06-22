@@ -19,13 +19,13 @@ export const useZoneStore = create<ZoneStore>((set) => ({
   // setZoneAssignments should reference existing dict,
   // and accept a zone id and a list of geoids to add to the list.
   // if the geoids exist in other key lists, they must be removed from those lists.
-  setZoneAssignments: (zone: Zone, geoids: Array<GEOID>) =>
+  setZoneAssignments: (zone: Zone, geoids: Set<GEOID>) =>
     set((state) => ({
       zoneAssignments: {
         // check if geoid is in other zones; if so, remove
         ...Object.keys(state.zoneAssignments).reduce((acc, key) => {
           acc[key] = state.zoneAssignments[key].filter(
-            (geoid) => !geoids.includes(geoid)
+            (geoid) => !geoids.has(geoid)
           );
           return acc;
         }, {}),

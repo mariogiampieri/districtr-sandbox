@@ -21,10 +21,7 @@ export const HighlightFeature = (
     features?.map((feature) => feature.properties?.GEOID20)
   );
   if (features?.length) {
-    zoneStoreRef.current?.setZoneAssignments(
-      zoneStoreRef.current?.selectedZone,
-      geoids
-    );
+    zoneStoreRef.setZoneAssignments(zoneStoreRef.selectedZone, geoids);
   }
 };
 
